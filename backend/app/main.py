@@ -1,3 +1,5 @@
+from app.db.database import init_db
+import app.db.models
 from app.core.logging import setup_logging
 import logging
 from fastapi import FastAPI
@@ -6,7 +8,7 @@ from app.core.config import settings
 
 app = FastAPI(title=settings.app_name)
 setup_logging()
-
+init_db()
 logger = logging.getLogger(__name__)
 
 logger.info("SentinelOps backend started")

@@ -35,6 +35,8 @@ services:
       - postgres
     networks:
       - sentinelops-network
+    volumes:
+      - ./backend/data:/app/data
    
   frontend:
     build:

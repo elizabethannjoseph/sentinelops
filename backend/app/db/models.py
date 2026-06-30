@@ -1,0 +1,19 @@
+from datetime import datetime
+
+from sqlalchemy import DateTime, Float, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column
+
+from app.db.database import Base
+
+
+class HealthResult(Base):
+    __tablename__ = "health_results"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    service_name: Mapped[str] = mapped_column(String(100))
+    status: Mapped[str] = mapped_column(String(20))
+    response_time_ms: Mapped[float] = mapped_column(Float)
+    checked_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+    )
