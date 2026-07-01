@@ -1,7 +1,9 @@
 import asyncio
+import logging
 
 from app.health.engine import HealthEngine
 
+logger = logging.getLogger(__name__)
 
 class Scheduler:
 
@@ -17,3 +19,10 @@ class Scheduler:
             await self.engine.run()
 
             await asyncio.sleep(5)
+        while True:
+            try:
+              await self.engine.run()
+            except Exception as e:
+                logger.exception("Health check failed")
+                
+            await asyncio.sleep(...)

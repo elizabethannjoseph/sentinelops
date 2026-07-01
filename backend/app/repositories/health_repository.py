@@ -33,14 +33,19 @@ class HealthRepository:
             session.close()
 
     def get_latest(self):
-
         session = SessionLocal()
-
         try:
-            return (
+            latest = {}
+            results = (
                 session.query(HealthResultModel)
                 .order_by(HealthResultModel.checked_at.desc())
                 .all()
-            )
+                )
+            for result in results:
+                if result.service_name not in latest:
+                    latest[result.service_name] = result
+
+            return list(latest.values())
+
         finally:
             session.close()

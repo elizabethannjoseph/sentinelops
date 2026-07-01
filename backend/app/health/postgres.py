@@ -1,32 +1,41 @@
 import time
 
-import httpx
+import psycopg
 
+from app.core.config import settings
 from app.health.base import HealthCheck
 from app.health.result import HealthResult
 
 
-class GLPIHealthCheck(HealthCheck):
+class PostgreSQLHealthCheck(HealthCheck):
 
     async def check(self) -> HealthResult:
 
         start = time.perf_counter()
 
         try:
-            async with httpx.AsyncClient(timeout=5.0) as client:
-                response = await client.get("http://glpi")
+            conn = psycopg.connect(
+            host=settings.postgres_host,
+            port=settings.postgres_port,
+            dbname=settings.postgres_db,
+            user=settings.postgres_user,
+            password=settings.postgres_password,
+        )
+
+            conn.close()
 
             elapsed = (time.perf_counter() - start) * 1000
 
-            status = "Healthy" if response.status_code == 200 else "Down"
+            status = "Healthy"
 
         except Exception:
 
             elapsed = (time.perf_counter() - start) * 1000
+
             status = "Down"
 
         return HealthResult(
-            service_name="GLPI",
+            service_name="PostgreSQL",
             status=status,
             response_time_ms=elapsed,
         )

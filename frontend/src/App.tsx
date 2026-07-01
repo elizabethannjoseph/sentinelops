@@ -12,13 +12,20 @@ interface HealthResult {
 function App() {
   const [results, setResults] = useState<HealthResult[]>([]);
 
-  useEffect(() => {
+  const fetchHealth = () => {
     fetch("http://localhost:8000/api/health")
       .then((response) => response.json())
       .then((data) => setResults(data))
       .catch((err) => console.error(err));
-  }, []);
+  };
 
+  useEffect(() => {
+    fetchHealth();
+
+    const interval = setInterval(fetchHealth, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="container">
       <h1>🛡️ SentinelOps</h1>
