@@ -23,7 +23,7 @@ function App() {
 
   const lastUpdated =
     results.length > 0
-      ? new Date().toLocaleTimeString()
+      ? new Date(results[0].checked_at + "Z").toLocaleString()
       : "--";
   const fetchHealth = () => {
     fetch("http://localhost:8000/api/health")
@@ -94,7 +94,7 @@ function App() {
               <p>
                 <strong>Last Checked</strong>
               </p>
-              <p>{new Date(result.checked_at).toLocaleString()}</p>
+              <p>{new Date(result.checked_at + "Z").toLocaleString()}</p>
             </div>
           </div>
         ))}
