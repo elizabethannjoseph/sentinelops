@@ -5,8 +5,6 @@ from app.metrics.metrics import (
     service_status,
     response_time,
 )
-from app.health import result
-
 class HealthEngine:
 
     async def run(self):

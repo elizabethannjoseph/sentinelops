@@ -110,3 +110,21 @@ h1 {
 .navbar button:hover {
   background: #1d4ed8;
 }
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.navbar a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.navbar a:hover {
+  color: #1d4ed8;
+}
